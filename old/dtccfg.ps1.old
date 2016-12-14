@@ -1,0 +1,24 @@
+<#
+PowerShell script to configure B-2 tablets
+Created by Data Tech Cafe
+#>
+
+# Initialization
+$rootUrl = "https://datatechcafe.com/download/dtccfg"
+$appDir = "${Env:ProgramFiles}\dtccfg"
+$backgroundImageFile = "BRAINtellect-2-background-logo-1280x1280.png"
+
+# Set background image
+Invoke-WebRequest -Uri "$rootUrl/$backgroundImageFile" -OutFile "$appDir\$backgroundImageFile"
+Invoke-WebRequest -Uri "$rootUrl/Set-Wallpaper.ps1" -OutFile "$appDir\Set-Wallpaper.ps1"
+Invoke-WebRequest -Uri "$rootUrl/wp.cmd" -OutFile "$appDir\wp.cmd"
+Invoke-Expression "& `"$appDir\Set-Wallpaper.ps1`" MyPics `"$backgroundImageFile`" "
+
+<# Testing running as user #>
+$username = 'b-2'
+$password = 'dtcdtcdtc'
+
+$securePassword = ConvertTo-SecureString $password -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential($username, $securePassword)
+Start-Process powershell.exe -Credential $credential -ArgumentList '-noprofile -command "cmd.exe /k c:\PROGRA~1\dtccfg\wp.cmd"'
+

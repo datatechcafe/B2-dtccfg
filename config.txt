@@ -1,0 +1,5 @@
+;!@Install@!UTF-8!
+Title="B-2 Configuration Service"
+BeginPrompt="Do you wish to install the B-2 Configuration Service?"
+ExecuteFile="setup.cmd"
+;!@InstallEnd@!

@@ -1,0 +1,9 @@
+<service>
+  <id>dtccfg</id>
+  <name>DTC B2 Configuration</name>
+  <description>Service that configures the tablet to work with the B-2 system. This service may only run when it has work to do.</description>
+  <executable>powershell.exe</executable>
+  <workingdirectory>%ProgramFiles%\dtccfg</workingdirectory>
+  <arguments>-executionpolicy bypass -File .\service.ps1</arguments>
+  <logmode>rotate</logmode>
+</service>
