@@ -17,3 +17,6 @@ $b2InstallWindow = "BST BRAINtellect2 v5.1.36 Setup"
 Touchscreen("disable")
 BackgroundImage
 InstallBraintellect
+Touchscreen("enable")
+
+Write-Host "DTC Config: Configuration successful!"

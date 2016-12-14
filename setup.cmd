@@ -6,6 +6,7 @@ copy dtccfg.exe "%ProgramFiles%\dtccfg"
 copy dtccfg.xml "%ProgramFiles%\dtccfg"
 copy setup.ps1 "%ProgramFiles%\dtccfg"
 copy service.ps1 "%ProgramFiles%\dtccfg"
+copy functions.ps1 "%ProgramFiles%\dtccfg"
 
 :Install service using winsw
 cd "%ProgramFiles%\dtccfg"

@@ -74,7 +74,7 @@ function InstallBraintellect {
   If (!($?)) { Fail("InstallBraintellect: Error 6 while running Installer") }
   Start-Sleep -m 500
   Write-Host -NoNewLine "."
-  #[System.Windows.Forms.SendKeys]::SendWait('%{i}')
+  [System.Windows.Forms.SendKeys]::SendWait('%{i}')
   If (!($?)) { Fail("InstallBraintellect: Error 7 while running Installer") }
   While (!(Test-Path "C:\Program Files\BST\BRAINtellect2\Uninstall.exe")) { Start-Sleep 1; Write-Host -NoNewLine "." }
   Start-Sleep -m 500
