@@ -44,4 +44,4 @@ Start-Sleep 1
 [System.Windows.Forms.SendKeys]::SendWait('%{n}')
 Start-Sleep 1
 [System.Windows.Forms.SendKeys]::SendWait('%{f}')
-
+Write-Host ""
