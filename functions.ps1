@@ -19,7 +19,7 @@ function Touchscreen([string]$action) {
     Fail("Touchscreen: Function must include one parameter of either 'enable' or 'disable'")
   }
 
-  return
+  Return
 }
 
 function BackgroundImage {
@@ -37,7 +37,7 @@ function BackgroundImage {
   Invoke-Expression "& `"$appDir\Set-Wallpaper.ps1`" MyPics `"$backgroundImageFile`" "
   If (!($?)) { Fail("BackgroundImage: Failed to set background image") }
 
-  return
+  Return
 }
 
 function InstallBraintellect {
@@ -85,7 +85,27 @@ function InstallBraintellect {
   Write-Host -NoNewLine "."
   [System.Windows.Forms.SendKeys]::SendWait('%{f}')
   If (!($?)) { Fail("InstallBraintellect: Error 9 while running Installer") }
-  Write-Host ""
+  
+  Write-Host "InstallBraintellect: Completed successfully"
 
-  return
+  Return
+}
+
+function RemoveDesktopIcons {
+  Write-Host "RemoveDesktopIcons: Removing desktop icons"
+
+  # Get rid of default shortcuts
+  Remove-Item C:\Users\*\Desktop\*lnk -Force
+  If (!($?)) { Fail("RemoveDesktopIcons: Problems deleting lnk files from Desktop") }
+
+  # Hide Recycle Bin
+  # Note, recycle bin will not disappear until the user logs out or computer restarts
+  $policiesKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies"
+  New-Item -Path $policiesKey -Name NonEnum
+  New-ItemProperty -Path "$policiesKey\NonEnum" -Name "{645FF040-5081-101B-9F08-00AA002F954E}"" -Value 1 -PropertyType Dword
+  # No error checking because we do not want to halt if it fails when reg keys or values already exist
+
+  Write-Host "RemoveDesktopIcons: Desktop icons removed, Recycle Bin will disappear after the user logs out or the computer restarts"  
+
+  Return
 }

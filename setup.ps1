@@ -14,9 +14,10 @@ $b2InstallWindow = "BST BRAINtellect2 v5.1.36 Setup"
 
 # Main
 . ./functions.ps1
-Touchscreen("disable")
 BackgroundImage
+Touchscreen("disable")
 InstallBraintellect
 Touchscreen("enable")
+RemoveDesktopIcons
 
 Write-Host "DTC Config: Configuration successful!"

@@ -17,7 +17,7 @@ sc triggerinfo dtccfg start/networkon
 sc triggerinfo dtccfg stop/networkoff
 
 :Run setup.ps1
-powershell.exe -File ./setup.ps1
+powershell.exe -ExecutionPolicy Bypass -File ./setup.ps1
 
 :Start service and exit script
 dtccfg.exe start
