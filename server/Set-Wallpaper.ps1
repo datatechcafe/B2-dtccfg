@@ -161,7 +161,7 @@
 [STRING]$WebProxyServer = "proxy1.mydomain.com.au"
 
 #Text Overlay Options
-[BOOLEAN]$TextOverlay = $True   
+[BOOLEAN]$TextOverlay = $False   
 [STRING]$TextColour = "White"
 [STRING]$FontName = "Arial"
 [INT]$FontSize = 14

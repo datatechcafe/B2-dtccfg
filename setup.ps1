@@ -8,6 +8,7 @@ Write-Host "DTC Config B-2 Tablet Setup v1.0.0"
 # Initialization
 $rootUrl = "https://datatechcafe.com/download/dtccfg"
 $appDir = "${Env:ProgramFiles}\dtccfg"
+$b2Dir = "${Env:ProgramFiles}\bst"
 $backgroundImageFile = "BRAINtellect-2-background-logo-1280x1280.png"
 $b2InstallFile = "setup_BRAINtellect2_v5.1.36.exe"
 $b2InstallWindow = "BST BRAINtellect2 v5.1.36 Setup"
@@ -18,6 +19,9 @@ BackgroundImage
 Touchscreen("disable")
 InstallBraintellect
 Touchscreen("enable")
+CopyImages
 RemoveDesktopIcons
+AddDesktopIcons
+ForceDesktopMode
 
 Write-Host "DTC Config: Configuration successful!"

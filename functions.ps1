@@ -91,6 +91,24 @@ function InstallBraintellect {
   Return
 }
 
+function CopyImages {
+  # Images provided by B-2 were copied to the server, and are pulled down to a
+  # \Program Files\BST\Images directory, for use by other customizations of the tablet
+  Write-Host "CopyImages: Copying custom BRAINtellect images"
+  mkdir $b2Dir\Images
+  Invoke-WebRequest -Uri "$rootUrl/Images/b-2.ico" -OutFile "$b2Dir\Images\b-2.ico"
+  Invoke-WebRequest -Uri "$rootUrl/Images/B-2.png" -OutFile "$b2Dir\Images\B-2.png"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect.ico" -OutFile "$b2Dir\Images\BRAINtellect.ico"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect.png" -OutFile "$b2Dir\Images\BRAINtellect.png"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect-2-app-shortcut-icon-256x256.ico" -OutFile "$b2Dir\Images\BRAINtellect-2-app-shortcut-icon-256x256.ico"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect-2-background-logo-1280x1280.png" -OutFile "$b2Dir\Images\BRAINtellect-2-background-logo-1280x1280.png"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect-2-background-texture-1280x1280.png" -OutFile "$b2Dir\Images\BRAINtellect-2-background-texture-1280x1280.png"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect-2-lock-screen-1280x1280.png" -OutFile "$b2Dir\Images\BRAINtellect-2-lock-screen-1280x1280.png"
+  Invoke-WebRequest -Uri "$rootUrl/Images/BRAINtellect-2-support-shortcut-icon-256x256.ico" -OutFile "$b2Dir\Images\BRAINtellect-2-support-shortcut-icon-256x256.ico"
+  Invoke-WebRequest -Uri "$rootUrl/Images/bst-braintellect-2-user-account-square-2048sq.jpg" -OutFile "$b2Dir\Images\bst-braintellect-2-user-account-square-2048sq.jpg"
+  Write-Host "CopyImages: Successfully copied images"
+}
+
 function RemoveDesktopIcons {
   Write-Host "RemoveDesktopIcons: Removing desktop icons"
 
@@ -102,10 +120,27 @@ function RemoveDesktopIcons {
   # Note, recycle bin will not disappear until the user logs out or computer restarts
   $policiesKey = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies"
   New-Item -Path $policiesKey -Name NonEnum
-  New-ItemProperty -Path "$policiesKey\NonEnum" -Name "{645FF040-5081-101B-9F08-00AA002F954E}"" -Value 1 -PropertyType Dword
+  New-ItemProperty -Path "$policiesKey\NonEnum" -Name "{645FF040-5081-101B-9F08-00AA002F954E}" -Value 1 -PropertyType Dword
   # No error checking because we do not want to halt if it fails when reg keys or values already exist
 
   Write-Host "RemoveDesktopIcons: Desktop icons removed, Recycle Bin will disappear after the user logs out or the computer restarts"  
 
   Return
+}
+
+function AddDesktopIcons {
+  Write-Host "AddDesktopIcons: Adding desktop icons"
+  Invoke-WebRequest -Uri "$rootUrl/BRAINtellect 2.lnk" -OutFile "${Env:UserProfile}\Desktop\BRAINtellect 2.lnk"
+  Invoke-WebRequest -Uri "$rootUrl/Support.url" -OutFile "${Env:UserProfile}\Desktop\Support.url"
+  Write-Host "AddDesktopIcons: Successfully added desktop icons"
+}
+
+function ForceDesktopMode {
+  Write-Host "ForceDesktopMode: Setting default UI to Desktop mode"
+  $regImmersiveShell = "HKCU:\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell"
+  New-ItemProperty -Path $regImmersiveShell -Name "SignInMode" -Value 1 -PropertyType DWORD -Force
+  If (!($?)) { Fail("ForceDesktopMode: Problems creating or updating SignInMode value") }
+  New-ItemProperty -Path $regImmersiveShell -Name "TabletMode" -Value 0 -PropertyType DWORD -Force
+  If (!($?)) { Fail("ForceDesktopMode: Problems creating or updating TabletMode value") }
+  Write-Host "ForceDesktopMode: Successfully updated default UI to desktop mode, will take affect upon next tablet restart"
 }
