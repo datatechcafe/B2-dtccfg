@@ -15,11 +15,11 @@ $b2InstallWindow = "BST BRAINtellect2 v5.1.36 Setup"
 
 # Main
 . ./functions.ps1
-BackgroundImage
 Touchscreen("disable")
 InstallBraintellect
 Touchscreen("enable")
 CopyImages
+BackgroundImage
 RemoveDesktopIcons
 AddDesktopIcons
 ForceDesktopMode

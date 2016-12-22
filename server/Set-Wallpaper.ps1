@@ -151,7 +151,7 @@
 #---------------------------
 
 #MyPics Options
-[STRING]$PicturesPath = [environment]::getfolderpath("MyPictures")+"\wallpaper"
+[STRING]$PicturesPath = "C:\Program Files\BST\Images"
 [BOOLEAN]$ResizeMyPics = $False  
 
 #Web Options
